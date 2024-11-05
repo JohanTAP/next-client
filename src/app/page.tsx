@@ -56,7 +56,7 @@ export default function LoginPage() {
 
       {/* Right side with login form */}
       <div className="flex-1 flex items-center justify-center p-8">
-        <div className="w-full max-w-md space-y-8 bg-[#2a2a2a] p-8 rounded-lg relative transition-all duration-300 ease-in-out hover:bg-gradient-to-br hover:from-purple-900/30 hover:to-purple-600/30 hover:border hover:border-purple-500/50 hover:shadow-[0_0_15px_rgba(136,58,234,0.5)]">
+        <div className="w-full max-w-md space-y-8 bg-[#2a2a2a] p-10 rounded-lg border border-gray-700 transition-all duration-300 ease-in-out hover:bg-gradient-to-br hover:from-purple-900/30 hover:to-purple-600/30 hover:border-purple-500/50 hover:shadow-[0_0_15px_rgba(136,58,234,0.5)]">
           <div className="relative z-10">
             <h2 className="text-2xl font-semibold text-center text-purple-300">Inicie sesión en su cuenta</h2>
             <form onSubmit={handleSubmit} className="space-y-6 mt-8">
@@ -71,7 +71,7 @@ export default function LoginPage() {
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   required
-                  className="mt-1 block w-full bg-[#3a3a3a] text-white placeholder-gray-500 border-gray-600 focus:border-purple-500 focus:ring-purple-500"
+                  className="mt-1 block w-full"
                 />
               </div>
               <div>
@@ -85,18 +85,18 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="mt-1 block w-full bg-[#3a3a3a] text-white placeholder-gray-500 border-gray-600 focus:border-purple-500 focus:ring-purple-500"
+                  className="mt-1 block w-full"
                 />
               </div>
               {error && (
-                <div className="text-red-500 text-sm">
+                <div className="text-red-500 text-sm text-center">
                   {error}
                 </div>
               )}
               <div className="flex justify-center">
                 <Button 
                   type="submit" 
-                  className="w-1/2 bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-md transition duration-300"
+                  className="w-full bg-purple-600 hover:bg-purple-700 text-white py-3 rounded-md font-semibold transition duration-300"
                   disabled={isLoading}
                 >
                   {isLoading ? 'Cargando...' : 'Iniciar sesión'}
