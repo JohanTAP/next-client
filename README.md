@@ -87,11 +87,11 @@ pnpm dev
 El proyecto estará disponible en http://localhost:3000.
 
 Comandos Disponibles
-pnpm dev: Inicia el servidor de desarrollo en http://localhost:3000.
-pnpm build: Compila el proyecto para producción en la carpeta .next.
-pnpm start: Inicia el servidor en modo producción, sirviendo los archivos compilados.
-pnpm lint: Ejecuta ESLint para analizar el código en busca de errores y aplicar reglas de estilo.
-pnpm format: Formatea el código de acuerdo con las reglas de Prettier.
+- **pnpm dev:** Inicia el servidor de desarrollo en http://localhost:3000.
+- **pnpm build:** Compila el proyecto para producción en la carpeta .next.
+- **pnpm start:** Inicia el servidor en modo producción, sirviendo los archivos compilados.
+- **pnpm lint:** Ejecuta ESLint para analizar el código en busca de errores y aplicar reglas de estilo.
+- **pnpm format:** Formatea el código de acuerdo con las reglas de Prettier.
 
 ## Variables de Entorno
 Las siguientes variables de entorno son necesarias para que el proyecto funcione correctamente:
