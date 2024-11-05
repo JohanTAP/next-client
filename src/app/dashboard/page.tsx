@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 import {
   Sidebar,
   SidebarContent,
@@ -14,56 +14,31 @@ import {
   SidebarFooter,
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
-import { Home, User, Settings, LogOut, Loader2 } from 'lucide-react';
+import { Home, User, Settings, LogOut, Loader2 } from "lucide-react";
+import { useAuth } from "@/context/AuthContext"; // Importamos el contexto de autenticación
 
 export default function Dashboard() {
-  const [token, setToken] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { token, setToken } = useAuth(); // Extraemos el token y setToken del contexto
   const router = useRouter();
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const cookieToken = document.cookie
-          .split('; ')
-          .find(row => row.startsWith('token='))
-          ?.split('=')[1];
-
-        if (cookieToken) {
-          setToken(cookieToken);
-        } else {
-          throw new Error('No token found');
-        }
-      } catch {
-        setError('Failed to load user data. Please try logging in again.');
-        router.push('/');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchUserData();
-  }, [router]);
+    if (!token) {
+      // Si no hay token, redirigimos al usuario a la página de inicio de sesión
+      router.push("/");
+    }
+  }, [token, router]);
 
   const handleLogout = () => {
-    document.cookie = 'token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-    router.push('/');
+    setToken(null); // Limpiamos el token en el contexto de autenticación
+    document.cookie = "token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;"; // Limpiamos la cookie por seguridad
+    router.push("/"); // Redirigimos al usuario a la página de inicio de sesión
   };
 
-  if (loading) {
+  if (!token) {
+    // Si el token no está presente, mostramos una pantalla de carga o un mensaje de redirección
     return (
       <div className="flex h-screen items-center justify-center bg-[#1c1c1c]">
         <Loader2 className="h-8 w-8 animate-spin text-purple-400" />
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="flex h-screen items-center justify-center bg-[#1c1c1c] p-4">
       </div>
     );
   }
