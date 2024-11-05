@@ -7,8 +7,7 @@ import Cookies from 'js-cookie';
 
 interface UserInfo {
   id: string;
-  name: string;
-  email: string;
+  username: string;
   rol: {
     id: string;
     tipo_usuario: string;

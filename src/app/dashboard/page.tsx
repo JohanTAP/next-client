@@ -84,8 +84,7 @@ export default function Dashboard() {
             <div className="bg-[#3a3a3a] p-4 rounded">
               <p><strong>Token:</strong> {token}</p>
               <p><strong>ID:</strong> {userInfo?.id}</p>
-              <p><strong>Nombre:</strong> {userInfo?.name || "Sin nombre"}</p>
-              <p><strong>Email:</strong> {userInfo?.email || "Sin email"}</p>
+              <p><strong>Usuario:</strong> {userInfo?.username || "Sin nombre"}</p>
               <p><strong>Rol:</strong> {userInfo?.rol.tipo_usuario || "Sin rol"}</p>
               <p><strong>Estado:</strong> {userInfo?.is_habilitado ? "Habilitado" : "Deshabilitado"}</p>
               <p><strong>Sucursal:</strong> {userInfo?.ubicacion_empresa.sucursal || "Sin sucursal"}</p>
