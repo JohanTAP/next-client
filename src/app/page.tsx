@@ -24,7 +24,7 @@ export default function LoginPage() {
 
     try {
       const data = await loginSubmit(e); // Pasamos 'e' al llamar a loginSubmit
-      setToken(data.token); // Guarda el token en el contexto de autenticación
+      setToken(data.token, data.usuario); // Guarda el token y la información del usuario en el contexto de autenticación
     } catch (error) {
       console.error("Error en el inicio de sesión:", error);
     }

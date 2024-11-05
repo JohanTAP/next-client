@@ -1,41 +1,26 @@
 "use client";
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarHeader,
-  SidebarMenu,
-  SidebarMenuItem,
-  SidebarMenuButton,
-  SidebarProvider,
-  SidebarFooter,
-} from "@/components/ui/sidebar";
+import { Sidebar, SidebarProvider, SidebarContent, SidebarHeader, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarFooter } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { Home, User, Settings, LogOut, Loader2 } from "lucide-react";
-import { useAuth } from "@/context/AuthContext"; // Importamos el contexto de autenticación
+import Link from "next/link";
+import { useAuth } from "@/context/AuthContext";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Dashboard() {
-  const { token, setToken } = useAuth(); // Extraemos el token y setToken del contexto
+  const { token, userInfo, handleLogout } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
+    // Verifica si el usuario tiene un token; si no, redirige al login
     if (!token) {
-      // Si no hay token, redirigimos al usuario a la página de inicio de sesión
       router.push("/");
     }
   }, [token, router]);
 
-  const handleLogout = () => {
-    setToken(null); // Limpiamos el token en el contexto de autenticación
-    document.cookie = "token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;"; // Limpiamos la cookie por seguridad
-    router.push("/"); // Redirigimos al usuario a la página de inicio de sesión
-  };
-
   if (!token) {
-    // Si el token no está presente, mostramos una pantalla de carga o un mensaje de redirección
+    // Muestra un indicador de carga mientras se redirige
     return (
       <div className="flex h-screen items-center justify-center bg-[#1c1c1c]">
         <Loader2 className="h-8 w-8 animate-spin text-purple-400" />
@@ -83,10 +68,7 @@ export default function Dashboard() {
           </SidebarContent>
           <SidebarFooter>
             <div className="p-4">
-              <Button
-                onClick={handleLogout}
-                className="w-full bg-red-600 hover:bg-red-700 text-white flex items-center justify-center py-2 px-4 rounded-md transition duration-300"
-              >
+              <Button onClick={handleLogout} className="w-full bg-red-600 hover:bg-red-700 text-white flex items-center justify-center py-2 px-4 rounded-md transition duration-300">
                 <LogOut size={20} className="mr-2" />
                 Cerrar sesión
               </Button>
@@ -98,13 +80,16 @@ export default function Dashboard() {
         <div className="flex-1 p-8 overflow-y-auto">
           <h2 className="text-3xl font-bold mb-6">Bienvenido al Dashboard</h2>
           <div className="bg-[#2a2a2a] p-6 rounded-lg shadow-lg">
-            <h3 className="text-xl font-semibold mb-4">Tu Token de Acceso:</h3>
-            <div className="bg-[#3a3a3a] p-4 rounded overflow-x-auto">
-              <code className="text-sm text-purple-300 break-all">{token}</code>
+            <h3 className="text-xl font-semibold mb-4">Información del Usuario:</h3>
+            <div className="bg-[#3a3a3a] p-4 rounded">
+              <p><strong>Token:</strong> {token}</p>
+              <p><strong>ID:</strong> {userInfo?.id}</p>
+              <p><strong>Nombre:</strong> {userInfo?.name || "Sin nombre"}</p>
+              <p><strong>Email:</strong> {userInfo?.email || "Sin email"}</p>
+              <p><strong>Rol:</strong> {userInfo?.rol.tipo_usuario || "Sin rol"}</p>
+              <p><strong>Estado:</strong> {userInfo?.is_habilitado ? "Habilitado" : "Deshabilitado"}</p>
+              <p><strong>Sucursal:</strong> {userInfo?.ubicacion_empresa.sucursal || "Sin sucursal"}</p>
             </div>
-            <p className="mt-4 text-sm text-gray-400">
-              Este token es utilizado para autenticar tus solicitudes a la API. Mantenlo seguro y no lo compartas.
-            </p>
           </div>
         </div>
       </div>

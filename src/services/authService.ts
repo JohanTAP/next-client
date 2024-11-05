@@ -6,8 +6,18 @@ export const login = async (username: string, password: string) => {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ username, password }),
   });
+
+  // Manejo de diferentes códigos de respuesta
   if (!response.ok) {
-    throw new Error('Credenciales incorrectas. Por favor verifica tu usuario y contraseña.');
+    if (response.status === 404) {
+      throw new Error('Credenciales inválidas. Verifica tu usuario y contraseña.');
+    } else if (response.status === 403) {
+      throw new Error('No puedes iniciar sesión, este usuario está deshabilitado.');
+    } else {
+      throw new Error('Error desconocido. Inténtalo de nuevo más tarde.');
+    }
   }
-  return response.json();
+
+  const data = await response.json();
+  return data;
 };

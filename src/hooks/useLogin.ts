@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { login } from '@/services/authService';
+import { useAuth } from '@/context/AuthContext';
+import Cookies from 'js-cookie';
 
 export const useLogin = () => {
   const [username, setUsername] = useState('');
@@ -10,8 +12,8 @@ export const useLogin = () => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const { setToken } = useAuth();
 
-  // Funciones de manejo de cambio de estado
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value);
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
 
@@ -22,9 +24,11 @@ export const useLogin = () => {
 
     try {
       const data = await login(username, password);
-      document.cookie = `token=${data.token}; path=/; max-age=3600; secure; samesite=strict`;
+      Cookies.set('token', data.token, { expires: 1, secure: true, sameSite: 'strict' });
+      Cookies.set('userInfo', JSON.stringify(data.usuario), { expires: 1, secure: true, sameSite: 'strict' });
+      setToken(data.token, data.usuario); // Guarda token y userInfo en el contexto
       router.push('/dashboard');
-      return data; // Retorna los datos de la API para el token
+      return data;
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message || 'Error desconocido');
