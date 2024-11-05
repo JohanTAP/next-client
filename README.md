@@ -30,7 +30,7 @@ Este proyecto utiliza las siguientes tecnologías:
 
 ## Estructura del Proyecto
 
-´´´
+```bash
 src/
 ├── public/           # Archivos públicos.
 ├── app/              # Páginas principales de la aplicación
@@ -48,7 +48,7 @@ src/
 ├── styles/           # Estilos globales y configuración de Tailwind CSS
 │   └── globals.css   # Estilos globales del proyecto
 └── utils/            # Utilidades y funciones auxiliares
-´´´
+```
 
 ## Instalación
 Sigue los pasos a continuación para configurar el proyecto en tu entorno local.
@@ -59,32 +59,32 @@ Node.js y pnpm deben estar instalados en tu sistema.
 Clonar el Repositorio
 Primero, clona el repositorio en tu máquina local:
 
-´´´
+```bash
 git clone https://github.com/JohanTAP/next-client.git
 cd next-client
-´´´
+```
 
 Instalación de Dependencias
 Usa pnpm para instalar las dependencias:
 
-´´´
+```bash
 pnpm install
-´´´
+```
 
 Configuración de Variables de Entorno
 Crea un archivo .env.local en la raíz del proyecto con las siguientes variables:
 
-´´´
+```bash
 NEXT_PUBLIC_API_URL=
-´´´
+```
 
 ## Uso
 Para iniciar el proyecto en modo de desarrollo:
 
-´´´
+```bash
 pnpm dev
+```
 El proyecto estará disponible en http://localhost:3000.
-´´´
 
 Comandos Disponibles
 pnpm dev: Inicia el servidor de desarrollo en http://localhost:3000.
